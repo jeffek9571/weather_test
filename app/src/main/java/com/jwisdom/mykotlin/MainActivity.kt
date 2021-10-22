@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
         DataBindingUtil.setContentView<ActivityMainBinding>(this,R.layout.activity_main)
 
         val model = ViewModelProvider(this)[viewModel::class.java]
-//        model.getUsers().observe(this, Observer<List<User>>{ users ->
-//            // update UI
-//        })
+        model.getUsers().observe(this, Observer<List<User>>{ users ->
+            // update UI
+        })
 
 
         btn.setOnClickListener {
