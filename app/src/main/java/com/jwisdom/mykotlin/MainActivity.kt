@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.jwisdom.mykotlin.data.User
 import com.jwisdom.mykotlin.databinding.ActivityMainBinding
 import com.jwisdom.mykotlin.model.viewModel
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        GlobalScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {
 //            val time = System.currentTimeMillis()
             val time = measureTimeMillis {
                 val result = async  {
@@ -44,7 +45,11 @@ class MainActivity : AppCompatActivity() {
                     result2
                 }
                 val ans = "${result.await()+ result1.await()}"
-                runOnUiThread {
+//                runOnUiThread {
+//                    textView.text = ans
+//                }
+//                or
+                withContext(Dispatchers.Main){
                     textView.text = ans
                 }
 

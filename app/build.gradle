@@ -52,6 +52,7 @@ dependencies {
 
     kapt "com.android.databinding:compiler:3.1.4"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
     def retrofit2_version = "2.9.0"
     def room_version = "2.3.0"
