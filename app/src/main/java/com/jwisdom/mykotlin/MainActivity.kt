@@ -69,40 +69,44 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
 //        StateFlow mode
         model.value.getStateData()
         lifecycleScope.launchWhenStarted {
             var total : ArrayList<Child> = ArrayList()
 
             model.value.mStatedata.collectLatest {
-                binding.model=it
-                binding.progressBar.isVisible=true
-                if(it.status=="false"){
-//                    binding.progressBar.isVisible=false
-                    return@collectLatest
-                }
-                lifecycleScope.launch(Dispatchers.IO){
-                    for(element in it.info){
-                        for(element1 in element.child){
-                            total.add(element1)
-                        }
-                    }
+//                binding.model=it
 
+                lifecycleScope.launch(Dispatchers.IO){
+//                    for(element in it.info){
+//                        for(element1 in element.child){
+//                            total.add(element1)
+//                        }
+//                    }
                     withContext(Dispatchers.Main){
-                        if(total.size>0){
+                        if(it.size>0){
 //                            binding.tv2.text = total.toString()
                             binding.rv.apply {
-                                postadapter = PostAdapter(context,total)
+                                postadapter = PostAdapter(context,it)
                                 adapter = postadapter
                                 layoutManager = LinearLayoutManager(this@MainActivity)
 
                             }
                         }
-                        binding.progressBar.isVisible=false
 
                     }
                 }
 
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            model.value._load.collectLatest {
+                when(it){
+                    true->binding.progressBar.isVisible=true
+                    false->binding.progressBar.isVisible=false
+                }
             }
         }
 
