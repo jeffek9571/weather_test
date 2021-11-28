@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -111,6 +112,11 @@ class MainActivity : AppCompatActivity() {
                 false->{
                     update = true
                     Snackbar.make(binding.bt,"check network",Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK",object : View.OnClickListener{
+                            override fun onClick(p0: View?) {
+                            }
+
+                        })
                         .show()
                     lifecycleScope.launch(Dispatchers.Main) {
                         //儲存Recyclerview當前位置狀態
