@@ -7,20 +7,32 @@
 
     <fragment
         android:id="@+id/AFragment"
-        android:name="com.jwisdom.mykotlin.AFragment"
+        android:name="com.example.test.AFragment"
         android:label="fragment_a"
         tools:layout="@layout/fragment_a" >
+        <argument
+            android:name="hia"
+            app:argType="string"
+            android:defaultValue='""' />
         <action
             android:id="@+id/action_AFragment_to_BFragment2"
-            app:destination="@id/BFragment2" />
+            app:destination="@id/BFragment2"
+            app:enterAnim="@anim/side_from_left"
+            app:exitAnim="@anim/side_to_right" />
     </fragment>
     <fragment
         android:id="@+id/BFragment2"
-        android:name="com.jwisdom.mykotlin.BFragment"
+        android:name="com.example.test.BFragment"
         android:label="fragment_b"
-        tools:layout="@layout/fragment_b" >
+        tools:layout="@layout/fragment_b">
         <action
             android:id="@+id/action_BFragment2_to_AFragment"
-            app:destination="@id/AFragment" />
+            app:destination="@id/AFragment"
+            app:enterAnim="@anim/mglide"
+            app:exitAnim="@anim/side_to_right" />
+        <argument
+            android:name="hi"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>

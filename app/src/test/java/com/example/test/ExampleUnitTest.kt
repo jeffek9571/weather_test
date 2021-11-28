@@ -1,4 +1,4 @@
-package com.jwisdom.mykotlin
+package com.example.test
 
 import org.junit.Test
 

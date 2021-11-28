@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">My kotlin</string>
+    <string name="app_name">My test</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="taipei">臺北市</string>
+    <string name="key">CWB-30C52969-DC81-4580-968D-2D5211F1E73B</string>
+    <string name="welcome">歡迎回來</string>
+
 </resources>

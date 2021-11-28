@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,6 +11,9 @@
         android:id="@+id/tv2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello_blank_bbfragment" />
+        android:background="@color/teal_700"
+        android:gravity="center"
+        android:text="hello_blank_bbfragment"
+        android:textColor="@color/black" />
 
 </FrameLayout>

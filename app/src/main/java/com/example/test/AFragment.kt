@@ -1,26 +1,38 @@
-package com.jwisdom.mykotlin
+package com.example.test
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import com.jwisdom.mykotlin.databinding.ActivityMainBinding
-import com.jwisdom.mykotlin.databinding.FragmentABinding
-import com.jwisdom.mykotlin.databinding.ItemBinding
-import com.jwisdom.mykotlin.databinding.ItemBindingImpl
-import com.jwisdom.mykotlin.viewModel.PostViewModel
-import kotlinx.coroutines.flow.collectLatest
+import com.example.test.databinding.FragmentABinding
+import com.example.test.viewModel.PostViewModel
+import android.hardware.camera2.CameraDevice
+import android.os.Build
+import android.util.DisplayMetrics
+import android.view.*
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentContainerView
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.navArgs
+import kotlinx.coroutines.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+private const val request_code = 1
 
 /**
  * A simple [Fragment] subclass.
@@ -35,6 +47,12 @@ class AFragment : Fragment() {
 //    by activityViewModels()表示這個是依附在activity生命週期
     private val viewModel: PostViewModel by activityViewModels()
 
+    private var _binding: FragmentABinding? =null
+    private val binding get() = _binding!!
+
+    val args: AFragmentArgs by navArgs()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -48,30 +66,34 @@ class AFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding  = DataBindingUtil.inflate<FragmentABinding>(inflater,R.layout.fragment_a,container,false)
-//        val view = inflater.inflate(R.layout.fragment_a, container, false)
-//        view.findViewById<TextView>(R.id.tv1).setOnClickListener { Navigation.findNavController(view).navigate(R.id.BFragment2)}
-//        return view
+        if(_binding==null){
+            _binding  = DataBindingUtil.inflate<FragmentABinding>(inflater,R.layout.fragment_a,container,false)
+
 
 //        直接使用PostViewModel
 //        binding.viewModel=viewModel
+            binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.getXmlData()
-        lifecycleScope.launchWhenStarted {
-//            viewModel._load.collectLatest {
-//                binding.viewModel=it
-//            }
-            viewModel._error_msg.collectLatest {
-                binding.error=it
+            binding.tva.setOnClickListener {
+                val action = AFragmentDirections.actionAFragmentToBFragment2(binding.textView.text.toString())
+                Navigation.findNavController(binding.root).navigate(action)
             }
+
+
+            binding.textView.text = arguments?.get("amount").toString()
+
         }
 
 
-
-        binding.tv1.setOnClickListener { Navigation.findNavController(binding.root).navigate(R.id.BFragment2) }
-
         return binding.root
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     companion object {
         /**
