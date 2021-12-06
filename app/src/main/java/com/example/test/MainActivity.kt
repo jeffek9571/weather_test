@@ -21,9 +21,9 @@ import androidx.lifecycle.*
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
-import com.example.test.DataStore.userPreferencesDataStore
 import com.example.test.adapter.PostAdapter
 import com.example.test.databinding.ActivityMainBinding
+import com.example.test.datastore.DataStore.userPreferencesDataStore
 import com.example.test.network.internet
 import com.example.test.viewModel.PostViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -43,19 +43,6 @@ class MainActivity : AppCompatActivity() {
     var recyclerViewState : Parcelable?=null
     private val Times = intPreferencesKey("time")
 
-
-    private suspend fun save(key: String, value: Int) {
-        val dataStoreKey = intPreferencesKey(key)
-        userPreferencesDataStore.edit { settings ->
-            settings[dataStoreKey] = value
-        }
-    }
-
-    private suspend fun read(key: String): Int? {
-        val dataStoreKey = intPreferencesKey(key)
-        val preferences = userPreferencesDataStore.data.first()
-        return preferences[dataStoreKey]
-    }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         update = false
@@ -82,11 +69,11 @@ class MainActivity : AppCompatActivity() {
     private fun Welcome_control(){
         lifecycleScope.launch {
             val login_time = async {
-                read(Times.toString())
+                com.example.test.datastore.DataStore.read(Times.toString())
             }
             when(login_time.await().toString()){
                 "1"->Toast.makeText(this@MainActivity,resources.getString(R.string.welcome),Toast.LENGTH_LONG).show()
-                else-> save(Times.toString(),1)
+                else-> com.example.test.datastore.DataStore.save(Times.toString(),1)
             }
         }
 
